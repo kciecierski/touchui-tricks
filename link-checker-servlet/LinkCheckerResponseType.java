@@ -2,7 +2,7 @@ package org.aem.tricks.core.impl.servlets.linkchecker;
 
 import com.google.gson.annotations.Expose;
 
-public enum DialogLinkCheckerResponseType {
+public enum LinkCheckerResponseType {
 
     INTERNAL_PAGE_EXISTS("internal", true), //
     INTERNAL_PAGE_NOT_EXISTS("internal", false), //
@@ -17,12 +17,12 @@ public enum DialogLinkCheckerResponseType {
     private final boolean exists;
 
 
-    DialogLinkCheckerResponseType(String pageType, final boolean exists) {
+    LinkCheckerResponseType(String pageType, final boolean exists) {
         this.pageType = pageType;
         this.exists = exists;
     }
 
-    public DialogLinkCheckerResponse getLinkCheckerResponse() {
-        return new DialogLinkCheckerResponse(pageType, exists);
+    public LinkCheckerResponse getLinkCheckerResponse() {
+        return new LinkCheckerResponse(pageType, exists);
     }
 }

@@ -22,12 +22,12 @@ import org.osgi.service.cm.ConfigurationAdmin;
 
 import com.google.gson.Gson;
 
-@SlingServlet(paths = "/bin/dialoglinkchecker", methods = "GET", metatype = true)
+@SlingServlet(paths = "/bin/aemtrickslinkchecker", methods = "GET", metatype = true)
 @Properties({ //
-        @Property(name = DialogLinkCheckerServlet.EXTERNAL_PAGE_CONNECTION_PROPERTY, boolValue = true,
+        @Property(name = org.aem.tricks.core.impl.servlets.linkchecker.LinkCheckerServlet.EXTERNAL_PAGE_CONNECTION_PROPERTY, boolValue = true,
             propertyPrivate = false, description = "Check this if connection to www is available for AEM instance") //
 })
-public class DialogLinkCheckerServlet extends SlingSafeMethodsServlet {
+public class LinkCheckerServlet extends SlingSafeMethodsServlet {
 
     protected static final String EXTERNAL_PAGE_CONNECTION_PROPERTY = "externalPageConnection";
 
@@ -54,14 +54,14 @@ public class DialogLinkCheckerServlet extends SlingSafeMethodsServlet {
 
         if (isInternalLink(validatedUrl)) {
             writeLinkCheckerResponse(response,
-                    internalPageExists(request, validatedUrl) ? DialogLinkCheckerResponseType.INTERNAL_PAGE_EXISTS
-                            : DialogLinkCheckerResponseType.INTERNAL_PAGE_NOT_EXISTS);
+                    internalPageExists(request, validatedUrl) ? LinkCheckerResponseType.INTERNAL_PAGE_EXISTS
+                            : LinkCheckerResponseType.INTERNAL_PAGE_NOT_EXISTS);
         } else if (externalPageExists(validatedUrl)) {
-            writeLinkCheckerResponse(response, DialogLinkCheckerResponseType.EXTERNAL_PAGE_EXISTS);
+            writeLinkCheckerResponse(response, LinkCheckerResponseType.EXTERNAL_PAGE_EXISTS);
         } else if (isAnchorOrQueryParameter(validatedUrl)) {
-            writeLinkCheckerResponse(response, DialogLinkCheckerResponseType.EXTERNAL_PAGE_EXISTS);
+            writeLinkCheckerResponse(response, LinkCheckerResponseType.EXTERNAL_PAGE_EXISTS);
         } else {
-            writeLinkCheckerResponse(response, DialogLinkCheckerResponseType.EXTERNAL_PAGE_NOT_EXISTS);
+            writeLinkCheckerResponse(response, LinkCheckerResponseType.EXTERNAL_PAGE_NOT_EXISTS);
         }
     }
 
@@ -108,11 +108,11 @@ public class DialogLinkCheckerServlet extends SlingSafeMethodsServlet {
     }
 
     private void writeLinkCheckerResponse(final SlingHttpServletResponse servletResponse,
-            final DialogLinkCheckerResponseType dialogLinkCheckerResponseType) throws IOException {
+            final LinkCheckerResponseType LinkCheckerResponseType) throws IOException {
         servletResponse.setContentType(JSON_CONTENT_TYPE);
         servletResponse.setCharacterEncoding(UTF_8_ENCODING);
         final Gson gson = new Gson();
-        final String jsonResponse = gson.toJson(dialogLinkCheckerResponseType.getLinkCheckerResponse());
+        final String jsonResponse = gson.toJson(LinkCheckerResponseType.getLinkCheckerResponse());
         final Writer writer = servletResponse.getWriter();
         writer.write(jsonResponse);
         writer.flush();

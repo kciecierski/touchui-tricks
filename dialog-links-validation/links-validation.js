@@ -1,6 +1,6 @@
 var Validation = {
 
-    DIALOG_LINK_CHECKER_URL : "/bin/dialoglinkchecker",
+    DIALOG_LINK_CHECKER_URL : "/bin/aemtrickslinkchecker",
 
     validateDialogLinks: function(document, $, ns, $okButton, onSubmit)
     {
